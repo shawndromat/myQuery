@@ -7,23 +7,26 @@
     classes: [],
     init: function (selector) {
       this.selector = selector;
-      this.el = this.getEl(this.selector);
+      this.els = document.querySelectorAll(selector);
       return this;
     },
-    getEl: function (selector) {
-      if (selector[0] === "#") {
-        return document.getElementById(selector.slice(1))
-      } else if (selector[0] === ".") {
-        return document.getElementsByClassName(selector.slice(1))
-      } else {
-        return document.getElementsByTagName(selector);
-      }
-    },
+		isArray: function () {
+			return this.els.length > 1 ? true : false
+		},
+    // getEls: function (selector) {
+    //   return document.querySelectorAll(selector)
+    // },
+		append: function (content) {
+			this.els.push(content);
+      return this;
+		},
     html: function (content) {
       if (content) {
-        this.el.innerHTML = content;
+				for (var i = 0; i < this.els.length; i++) {
+					this.els[i].innerHTML = content;
+				}
       } else {
-        return this.el.innerHTML;
+        return this.els[0].innerHTML;
       }
       return this;
     }
