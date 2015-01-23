@@ -1,21 +1,19 @@
 (function (){
   var myQuery = function (selector) {
-    return _myQuery.init(selector);
+    return new _myQuery(selector);
   }
 
-  _myQuery = {
+  _myQuery = function(selector) {
+    this.selector = selector;
+    this.els = document.querySelectorAll(selector);
+    return this;
+  }
+  
+  _myQuery.prototype = {
     classes: [],
-    init: function (selector) {
-      this.selector = selector;
-      this.els = document.querySelectorAll(selector);
-      return this;
-    },
 		isArray: function () {
-			return this.els.length > 1 ? true : false
+			return this.els.length > 1 ? true : false;
 		},
-    // getEls: function (selector) {
-    //   return document.querySelectorAll(selector)
-    // },
 		append: function (content) {
 			this.els.push(content);
       return this;
@@ -29,6 +27,9 @@
         return this.els[0].innerHTML;
       }
       return this;
+    },
+    valueOf: function() {
+      return this.els;
     }
   }
 
